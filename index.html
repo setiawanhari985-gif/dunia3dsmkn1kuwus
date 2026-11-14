@@ -50007,6 +50007,167 @@ https://github.com/nodeca/pako/blob/main/LICENSE
                 touch-action: none
             }
 
+            /* ===== SPLIT LAYOUT: Panel Kiri + Dunia 3D Kanan ===== */
+            :root { --panel-w: 300px; }
+
+            /* Panel kiri permanen */
+            #hud-side-panel {
+                position: fixed;
+                top: 0; left: 0;
+                width: var(--panel-w);
+                height: 100vh;
+                background: #0a1223;
+                border-right: 1px solid rgba(99,179,237,0.15);
+                z-index: 100;
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+            }
+            /* Canvas 3D mulai dari tepi panel */
+            #canvas-container {
+                position: fixed;
+                top: 0;
+                left: var(--panel-w);
+                width: calc(100vw - var(--panel-w));
+                height: 100vh;
+                z-index: 1
+            }
+
+            /* Semua HUD overlay juga bergeser kanan */
+            #game-hud,
+            #joystick-zone-wrap,
+            #building-prompt,
+            #bus-board-wrap,
+            #waiting-teacher-banner,
+            #walk-to-dock-banner,
+            #ready-on-boat-banner,
+            #island-explore-banner,
+            #race-quiz-panel {
+                left: var(--panel-w) !important;
+                width: calc(100vw - var(--panel-w)) !important;
+            }
+            /* Joystick tetap di kiri bawah area kanan */
+            #joystick-zone {
+                left: calc(var(--panel-w) + 12px) !important;
+            }
+            /* Camera control tetap pojok kanan bawah area kanan */
+            #camera-control-box {
+                right: 12px !important;
+            }
+            /* Minimap di pojok kanan atas area kanan */
+            #hud-right-card {
+                right: 12px !important;
+                top: 12px !important;
+            }
+            /* Timer di tengah — DISEMBUNYIKAN saat mode 3D, sudah ada di panel kiri */
+            body.mode-3d #hud-center-card {
+                display: none !important;
+            }
+            /* Sembunyikan juga teacher-clean-toggle (tombol Tabel Nilai di pojok) saat mode 3D */
+            body.mode-3d #teacher-clean-toggle-wrap {
+                display: none !important;
+            }
+            /* Sembunyikan hud-left-card lama (pindah ke panel kiri) */
+            #hud-left-card { display: none !important; }
+            /* Toggle panel lama disembunyikan */
+            #hud-panel-toggle { display: none !important; }
+
+            /* Panel kiri — header */
+            .sp-header {
+                background: linear-gradient(135deg,#0f1f3d,#1e3a5f);
+                padding: 14px 14px 10px;
+                border-bottom: 1px solid rgba(99,179,237,0.15);
+                flex-shrink: 0;
+            }
+            .sp-badge {
+                display:inline-block; padding:2px 10px;
+                background:linear-gradient(90deg,#d32f2f,#f9a825);
+                color:#fff; border-radius:99px;
+                font-size:.6rem; font-weight:800;
+                letter-spacing:.08em; text-transform:uppercase;
+                margin-bottom:4px;
+            }
+            .sp-title {
+                font-size:1rem; font-weight:900; color:#fff;
+                letter-spacing:-.01em; line-height:1.2; margin:0;
+            }
+            .sp-subtitle { font-size:.7rem; color:#93c5fd; margin:2px 0 0; }
+            /* Panel kiri — scroll area */
+            .sp-body {
+                flex:1; overflow-y:auto; overflow-x:hidden;
+                padding:10px;
+                scrollbar-width:thin;
+                scrollbar-color: rgba(99,179,237,0.3) transparent;
+            }
+            .sp-body::-webkit-scrollbar { width:4px; }
+            .sp-body::-webkit-scrollbar-thumb { background:rgba(99,179,237,0.25); border-radius:4px; }
+            /* Section dalam panel */
+            .sp-section {
+                background:rgba(255,255,255,0.04);
+                border:1px solid rgba(255,255,255,0.07);
+                border-radius:12px;
+                padding:10px;
+                margin-bottom:8px;
+            }
+            .sp-section-title {
+                font-size:.6rem; font-weight:800;
+                text-transform:uppercase; letter-spacing:.1em;
+                color:#64748b; margin-bottom:7px;
+            }
+            /* Tombol dalam panel */
+            .sp-btn {
+                display:flex; align-items:center; gap:6px;
+                width:100%; padding:7px 10px;
+                background:rgba(255,255,255,0.05);
+                border:1px solid rgba(255,255,255,0.08);
+                border-radius:9px;
+                font-size:.75rem; font-weight:700; color:#cbd5e1;
+                cursor:pointer; text-align:left;
+                transition:background .15s, border-color .15s;
+                margin-bottom:4px;
+            }
+            .sp-btn:last-child { margin-bottom:0; }
+            .sp-btn:hover { background:rgba(255,255,255,0.1); border-color:rgba(255,255,255,0.18); color:#fff; }
+            .sp-btn-primary {
+                background:linear-gradient(90deg,#0284c7,#0ea5e9);
+                border-color:transparent; color:#fff;
+                box-shadow:0 2px 10px rgba(2,132,199,0.3);
+            }
+            .sp-btn-primary:hover { opacity:.88; }
+            .sp-btn-green { background:rgba(16,185,129,0.15); border-color:rgba(16,185,129,0.3); color:#6ee7b7; }
+            .sp-btn-green:hover { background:rgba(16,185,129,0.25); color:#a7f3d0; }
+            .sp-btn-amber { background:rgba(245,158,11,0.12); border-color:rgba(245,158,11,0.3); color:#fcd34d; }
+            .sp-btn-amber:hover { background:rgba(245,158,11,0.22); }
+            .sp-btn-red { background:rgba(239,68,68,0.12); border-color:rgba(239,68,68,0.3); color:#fca5a5; }
+            .sp-btn-red:hover { background:rgba(239,68,68,0.22); }
+            .sp-btn-purple { background:rgba(168,85,247,0.12); border-color:rgba(168,85,247,0.3); color:#d8b4fe; }
+            .sp-btn-purple:hover { background:rgba(168,85,247,0.22); }
+            /* Stat row */
+            .sp-stat { display:flex; justify-content:space-between; align-items:center; font-size:.72rem; color:#94a3b8; padding:3px 0; }
+            .sp-stat-val { font-weight:700; color:#e2e8f0; }
+            /* Tombol util kecil */
+            .sp-util-row { display:flex; gap:4px; flex-wrap:wrap; }
+            .sp-util-btn {
+                flex:1; min-width:0; padding:5px 4px;
+                background:rgba(255,255,255,0.05);
+                border:1px solid rgba(255,255,255,0.08);
+                border-radius:7px;
+                font-size:.65rem; font-weight:700; color:#94a3b8;
+                cursor:pointer; text-align:center;
+                transition:background .15s;
+            }
+            .sp-util-btn:hover { background:rgba(255,255,255,0.12); color:#fff; }
+            /* Footer panel */
+            .sp-footer {
+                padding:8px 10px;
+                border-top:1px solid rgba(255,255,255,0.06);
+                flex-shrink:0;
+            }
+            /* Panel kiri — sembunyikan saat bukan di mode 3D */
+            body:not(.mode-3d) #hud-side-panel { display:none; }
+            body.mode-3d #canvas-container { left: var(--panel-w); width: calc(100vw - var(--panel-w)); }
+            body:not(.mode-3d) #canvas-container { left:0; width:100vw; }
+
             #canvas-container {
                 position: fixed;
                 top: 0;
@@ -50406,6 +50567,101 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         </style>
     </head>
     <body class="text-slate-100" onclick="unlockAudioOnFirstInteraction()">
+
+        <!-- ===== PANEL KIRI SPLIT LAYOUT (muncul saat mode 3D aktif) ===== -->
+        <div id="hud-side-panel">
+            <!-- Header -->
+            <div class="sp-header">
+                <span class="sp-badge">SMKN 1 Kuwus</span>
+                <p class="sp-title">Dunia 3D Interaktif</p>
+                <p class="sp-subtitle" id="sp-role-label">Kamera Pantau Guru</p>
+            </div>
+
+            <!-- Body scrollable -->
+            <div class="sp-body">
+
+                <!-- Timer & Fase Kelas -->
+                <div class="sp-section" style="text-align:center">
+                    <div class="sp-section-title" style="text-align:left">⏱️ Status Kelas</div>
+                    <div id="sp-phase-label" class="text-[10px] font-extrabold uppercase tracking-widest text-sky-300 mb-1">MENUNGGU INSTRUKSI GURU</div>
+                    <div id="sp-timer" class="text-3xl font-extrabold text-white font-mono" style="letter-spacing:.05em">30:00</div>
+                    <div id="sp-location" class="text-[10px] text-amber-300 font-bold mt-1">📍 Plaza Metropolis</div>
+                </div>
+
+                <!-- Info pemain -->
+                <div class="sp-section">
+                    <div class="sp-section-title">👤 Info</div>
+                    <div class="sp-stat">
+                        <span>Nama</span>
+                        <span class="sp-stat-val" id="sp-player-name">—</span>
+                    </div>
+                    <div class="sp-stat">
+                        <span>Urutan Belajar</span>
+                        <span class="sp-stat-val" id="sp-progress">0 / 5</span>
+                    </div>
+                    <div class="sp-stat">
+                        <span>Koin</span>
+                        <span class="sp-stat-val">🪙 <span id="sp-coins">0</span></span>
+                    </div>
+                    <div id="sp-building-badges" class="flex flex-wrap gap-1 mt-2"></div>
+                    <div id="sp-next-hint" class="mt-2 text-[11px] font-bold text-amber-300 bg-slate-900/60 px-2 py-1.5 rounded-lg border border-amber-400/30">🎯 Tujuan: Gedung G1</div>
+                </div>
+
+                <!-- Kendali Guru (hanya tampil di mode guru) -->
+                <div class="sp-section" id="sp-teacher-controls">
+                    <div class="sp-section-title">🎛️ Kendali Kelas</div>
+                    <button onclick="teacherStartLearningPhase()" class="sp-btn sp-btn-green">▶️ Mulai Waktu Belajar</button>
+                    <button onclick="teacherCallToDockPhase()" class="sp-btn sp-btn-amber">🧭 Arahkan ke Dermaga</button>
+                    <button onclick="teacherStartBoatRace()" class="sp-btn sp-btn-red">🏁 Mulai Lomba Perahu</button>
+                    <button onclick="teacherStartReflectionPhase()" class="sp-btn sp-btn-purple">📝 Mulai Refleksi</button>
+                    <div class="sp-section-title" style="margin-top:8px">⏱️ Waktu</div>
+                    <div class="sp-util-row">
+                        <button onclick="teacherAdjustTime(300)" class="sp-util-btn" style="color:#6ee7b7">+5m</button>
+                        <button onclick="teacherAdjustTime(60)" class="sp-util-btn" style="color:#6ee7b7">+1m</button>
+                        <button onclick="teacherAdjustTime(-60)" class="sp-util-btn" style="color:#fca5a5">-1m</button>
+                        <button onclick="teacherAdjustTime(-300)" class="sp-util-btn" style="color:#fca5a5">-5m</button>
+                    </div>
+                </div>
+
+                <!-- Pengaturan Audio & Grafik -->
+                <div class="sp-section">
+                    <div class="sp-section-title">⚙️ Pengaturan</div>
+                    <div class="sp-util-row">
+                        <button onclick="toggleBGM()" id="sp-btn-bgm" class="sp-util-btn">🎵 Musik</button>
+                        <button onclick="toggleSFX()" id="sp-btn-sfx" class="sp-util-btn">🔊 SFX</button>
+                        <button onclick="aesGfxOpen()" class="sp-util-btn">🖥️ Grafik</button>
+                        <button onclick="toggleFullScreen()" class="sp-util-btn">⛶ Layar</button>
+                    </div>
+                </div>
+
+                <!-- Pantauan Siswa Online -->
+                <div class="sp-section" id="sp-teacher-controls">
+                    <div class="sp-section-title">👥 Siswa Online</div>
+                    <div id="sp-online-count" class="sp-stat">
+                        <span>Terhubung</span>
+                        <span class="sp-stat-val">0 siswa</span>
+                    </div>
+                    <div id="sp-online-list" class="space-y-1 mt-1 max-h-40 overflow-y-auto text-xs"></div>
+                </div>
+
+                <!-- Navigasi & Toko -->
+                <div class="sp-section" id="sp-shop-section" style="display:none">
+                    <div class="sp-section-title">🛍️ Toko & Kendaraan</div>
+                    <button onclick="openShopModal()" class="sp-btn sp-btn-amber">🛍️ Buka Toko</button>
+                    <button id="sp-btn-car" onclick="toggleCar()" class="sp-btn" style="display:none">🚗 Naik Mobil</button>
+                    <button id="sp-btn-bus" onclick="toggleBus()" class="sp-btn" style="display:none">🚌 Naik Bus</button>
+                </div>
+
+            </div>
+
+            <!-- Footer: tombol kembali ke dashboard -->
+            <div class="sp-footer">
+                <button onclick="exitTeacher3DMonitor ? exitTeacher3DMonitor() : null; document.body.classList.remove('mode-3d')" class="sp-btn sp-btn-primary" style="justify-content:center">
+                    ← Kembali ke Dashboard
+                </button>
+            </div>
+        </div>
+        <!-- ===== /PANEL KIRI ===== -->
         <div id="conn-warning" class="hidden fixed top-2 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-amber-400 text-slate-950 text-xs font-extrabold shadow-lg text-center" style="z-index:9000;pointer-events:none;max-width:92vw">⚠️ Belum tersambung ke server kelas… sedang mencoba lagi. Cek internet / jaringan sekolah.</div>
         <div id="access-gate" class="fixed inset-0 overflow-y-auto" style="z-index:9999;display:none;background:linear-gradient(160deg,#e8f5e9 0%,#b3e5fc 40%,#fff9c4 70%,#ffe0b2 100%)">
             <!-- Dekorasi latar alam NTT -->
@@ -50543,7 +50799,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
                             <input id="gate-nama" type="text" placeholder="Nama lengkap" class="hidden w-full px-4 py-3" style="user-select:text"/>
                             <div style="position:relative">
                                 <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:1rem;pointer-events:none">✉️</span>
-                                <input id="gate-email" type="email" placeholder="Email" autocomplete="username" class="w-full px-4 py-3" style="user-select:text;padding-left:2.6rem"/>
+                                <input id="gate-email" type="text" placeholder="Email / Username" autocomplete="username" class="w-full px-4 py-3" style="user-select:text;padding-left:2.6rem"/>
                             </div>
                             <div style="position:relative">
                                 <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:1rem;pointer-events:none">🔑</span>
@@ -50843,10 +51099,6 @@ https://github.com/nodeca/pako/blob/main/LICENSE
                     </div>
                     <div id="questions-editor-list" class="space-y-4"></div>
                 </div>
-                <div class="sticky bottom-4 z-20 flex flex-wrap justify-end gap-2">
-                    <button onclick="switchToStudentModeDirectly()" class="th-btn-util" style="padding:.6rem 1rem;font-size:.8rem;font-weight:800;color:#fbbf24;border-color:rgba(251,191,36,.3)">🤖 Simulasi Sebagai Siswa</button>
-                    <button onclick="generateSessionAndLink()" class="th-btn-primary" style="font-size:.85rem;padding:.65rem 1.3rem;box-shadow:0 4px 20px rgba(14,165,233,.4)">🚀 Simpan & Buat Link Kelas</button>
-                </div>
             </div>
         </div>
         <div id="paste-json-modal" class="ui-layer fixed inset-0 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 hidden z-50">
@@ -50886,13 +51138,20 @@ https://github.com/nodeca/pako/blob/main/LICENSE
                     <div id="student-resume-notice" class="hidden mt-2 text-[11px] font-bold text-emerald-200 bg-emerald-500/15 border border-emerald-400/40 rounded-xl px-3 py-2 text-left"></div>
                 </div>
                 <div class="text-left space-y-2">
-                    <label class="text-xs font-bold uppercase tracking-wider text-sky-300">Pilih Warna Robotmu:</label>
+                    <label class="text-xs font-bold uppercase tracking-wider text-sky-300">Pilih Warna Tenun Karaktermu:</label>
                     <div id="avatar-color-picker" class="flex items-center justify-center gap-3 pt-1">
-                        <button onclick="selectAvatarColor('#0ea5e9', this)" class="w-9 h-9 rounded-full bg-sky-500 ring-4 ring-white transition"></button>
-                        <button onclick="selectAvatarColor('#f43f5e', this)" class="w-9 h-9 rounded-full bg-rose-500 opacity-75 hover:opacity-100 transition"></button>
-                        <button onclick="selectAvatarColor('#10b981', this)" class="w-9 h-9 rounded-full bg-emerald-500 opacity-75 hover:opacity-100 transition"></button>
-                        <button onclick="selectAvatarColor('#f59e0b', this)" class="w-9 h-9 rounded-full bg-amber-500 opacity-75 hover:opacity-100 transition"></button>
-                        <button onclick="selectAvatarColor('#a855f7', this)" class="w-9 h-9 rounded-full bg-purple-500 opacity-75 hover:opacity-100 transition"></button>
+                        <!-- Merah NTT (bendera NTT) -->
+                        <button onclick="selectAvatarColor('#c0392b', this)" class="w-9 h-9 rounded-full ring-4 ring-white transition" style="background:#c0392b" title="Merah NTT"></button>
+                        <!-- Hitam tenun timor -->
+                        <button onclick="selectAvatarColor('#2C1810', this)" class="w-9 h-9 rounded-full opacity-75 hover:opacity-100 transition" style="background:#2C1810" title="Hitam Tenun"></button>
+                        <!-- Kuning emas (motif tenun) -->
+                        <button onclick="selectAvatarColor('#F39C12', this)" class="w-9 h-9 rounded-full opacity-75 hover:opacity-100 transition" style="background:#F39C12" title="Emas Tenun"></button>
+                        <!-- Hijau flores -->
+                        <button onclick="selectAvatarColor('#1a7a3c', this)" class="w-9 h-9 rounded-full opacity-75 hover:opacity-100 transition" style="background:#1a7a3c" title="Hijau Flores"></button>
+                        <!-- Biru laut Flores -->
+                        <button onclick="selectAvatarColor('#1565C0', this)" class="w-9 h-9 rounded-full opacity-75 hover:opacity-100 transition" style="background:#1565C0" title="Biru Laut Flores"></button>
+                        <!-- Coklat komodo -->
+                        <button onclick="selectAvatarColor('#7B4F2E', this)" class="w-9 h-9 rounded-full opacity-75 hover:opacity-100 transition" style="background:#7B4F2E" title="Coklat Komodo"></button>
                     </div>
                 </div>
                 <div class="space-y-2">
@@ -50903,80 +51162,181 @@ https://github.com/nodeca/pako/blob/main/LICENSE
             </div>
         </div>
         <div id="game-hud" class="ui-layer fixed inset-0 pointer-events-none hidden">
+            <!-- Toggle Panel Kiri -->
             <div id="teacher-clean-toggle-wrap" class="fixed top-2 left-1/2 -translate-x-1/2 z-30 pointer-events-auto hidden">
                 <div class="glass-light px-1.5 py-1 rounded-full flex items-center gap-1.5 shadow-lg">
                     <button onclick="toggleTeacherCleanUI()" id="btn-clean-ui" class="px-3 py-1 bg-sky-400 hover:bg-sky-300 text-slate-950 font-extrabold text-[11px] leading-tight rounded-full transition whitespace-nowrap">👁️ Sembunyikan Panel</button>
                     <button onclick="exitTeacher3DMonitor()" class="px-3 py-1 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-[11px] leading-tight rounded-full transition whitespace-nowrap">📊 Tabel Nilai & Refleksi</button>
                 </div>
             </div>
-            <div id="hud-top-bar" class="p-3 md:p-4 flex flex-wrap items-start justify-between gap-2 transition-opacity duration-300">
-                <div id="hud-left-card" class="glass rounded-2xl p-3.5 pointer-events-auto w-72 space-y-2 shadow-xl">
+
+            <!-- Style Panel HUD Baru -->
+            <style>
+                #hud-top-bar { position:fixed; top:0; left:0; right:0; bottom:0; pointer-events:none; z-index:20; }
+
+                /* ===== PANEL KIRI (collapsible) ===== */
+                #hud-left-card {
+                    position:fixed; top:12px; left:12px;
+                    width:260px; max-height:calc(100vh - 24px);
+                    overflow-y:auto; overflow-x:hidden;
+                    pointer-events:auto;
+                    background:rgba(10,18,35,0.88);
+                    backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+                    border:1px solid rgba(99,179,237,0.2);
+                    border-radius:16px;
+                    box-shadow:0 4px 24px rgba(0,0,0,0.4);
+                    transition:transform 0.25s ease, opacity 0.25s ease;
+                    z-index:25;
+                }
+                #hud-left-card.hud-collapsed {
+                    transform:translateX(-272px);
+                    opacity:0;
+                    pointer-events:none;
+                }
+                /* Tombol toggle panel kiri */
+                #hud-panel-toggle {
+                    position:fixed; top:12px; left:12px;
+                    z-index:26; pointer-events:auto;
+                    background:rgba(10,18,35,0.88);
+                    border:1px solid rgba(99,179,237,0.25);
+                    border-radius:10px;
+                    padding:6px 10px;
+                    color:#93c5fd; font-size:0.75rem; font-weight:700;
+                    cursor:pointer; display:none;
+                    backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+                    transition:background 0.15s;
+                }
+                #hud-panel-toggle:hover { background:rgba(10,18,35,0.97); }
+
+                /* ===== TIMER TENGAH — diperkecil, pindah ke tengah atas ===== */
+                #hud-center-card {
+                    position:fixed; top:12px; left:50%; transform:translateX(-50%);
+                    pointer-events:auto;
+                    background:rgba(10,18,35,0.82);
+                    backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+                    border:1px solid rgba(99,179,237,0.2);
+                    border-radius:14px;
+                    padding:8px 16px;
+                    text-align:center;
+                    box-shadow:0 4px 20px rgba(0,0,0,0.3);
+                    z-index:25;
+                    min-width:160px;
+                }
+                /* Tombol guru di bawah timer — collapsed by default, expand on hover */
+                #hud-teacher-quick-bar {
+                    max-height:0; overflow:hidden;
+                    transition:max-height 0.2s ease;
+                }
+                #hud-center-card:hover #hud-teacher-quick-bar,
+                #hud-center-card.expanded #hud-teacher-quick-bar {
+                    max-height:200px;
+                }
+
+                /* ===== PANEL KANAN (minimap) — pojok kanan atas, ringkas ===== */
+                #hud-right-card {
+                    position:fixed; top:12px; right:12px;
+                    width:200px;
+                    pointer-events:auto;
+                    background:rgba(10,18,35,0.82);
+                    backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+                    border:1px solid rgba(99,179,237,0.2);
+                    border-radius:14px;
+                    padding:8px;
+                    box-shadow:0 4px 20px rgba(0,0,0,0.3);
+                    z-index:25;
+                    transition:transform 0.25s ease;
+                }
+                /* Minimap canvas ukuran lebih kecil */
+                #minimap-canvas { width:100% !important; height:auto !important; }
+                #hud-online-list { max-height:80px; }
+
+                /* ===== JOYSTICK — tetap di kiri bawah ===== */
+                #joystick-zone { z-index:25; }
+
+                /* Sembunyikan hud-top-bar wrapper lama (kita pakai fixed langsung) */
+                #hud-top-bar { background:none; padding:0; display:block !important; }
+            </style>
+
+            <!-- Tombol toggle panel kiri -->
+            <button id="hud-panel-toggle" onclick="
+                var c=document.getElementById('hud-left-card');
+                var t=document.getElementById('hud-panel-toggle');
+                c.classList.toggle('hud-collapsed');
+                t.innerHTML = c.classList.contains('hud-collapsed') ? '☰ Panel' : '✕';
+                t.style.left = c.classList.contains('hud-collapsed') ? '12px' : '282px';
+            ">✕</button>
+
+            <div id="hud-top-bar" class="transition-opacity duration-300">
+                <!-- PANEL KIRI -->
+                <div id="hud-left-card" class="space-y-2.5" style="padding:12px">
                     <div id="hud-left-header" class="flex items-center justify-between gap-1">
                         <div id="hud-title-block" class="truncate">
-                            <span id="hud-role-badge" class="text-[11px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 bg-amber-400 text-slate-950 rounded-md">SMKN 1 Kuwus</span>
-                            <h2 id="hud-player-name" class="font-extrabold text-white text-base truncate mt-1">Nama Siswa</h2>
+                            <span id="hud-role-badge" class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 bg-amber-400 text-slate-950 rounded-md">SMKN 1 Kuwus</span>
+                            <h2 id="hud-player-name" class="font-extrabold text-white text-sm truncate mt-0.5">Nama Siswa</h2>
                         </div>
                         <div id="hud-btn-row" class="flex items-center gap-1 shrink-0">
-                            <button onclick="toggleTeacherMic()" id="btn-hud-mic" title="Pengumuman suara ke siswa (Alt+M)" style="display:none" class="btn-teacher-mic px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-rose-300 rounded-lg text-xs font-bold border border-white/15">🎤</button>
-                            <button onclick="toggleBGM()" id="btn-hud-bgm" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-emerald-300 rounded-lg text-xs font-bold border border-white/15">🎵</button>
-                            <button onclick="toggleSFX()" id="btn-hud-sfx" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-sky-200 rounded-lg text-xs font-bold border border-white/15">🔊</button>
-                            <button onclick="aesGfxOpen()" id="btn-hud-gfx" title="Pengaturan grafik" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-amber-300 rounded-lg text-xs font-bold border border-white/15">🖥️</button>
-                            <button onclick="toggleFullScreen()" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-sky-200 rounded-lg text-xs font-bold border border-white/15">⛶</button>
-                            <button id="btn-back-teacher" onclick="exitTeacher3DMonitor()" class="px-2.5 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-bold">⚙️</button>
+                            <button onclick="toggleTeacherMic()" id="btn-hud-mic" title="Pengumuman suara" style="display:none" class="btn-teacher-mic px-2 py-1 bg-slate-800 hover:bg-slate-700 text-rose-300 rounded-md text-xs font-bold border border-white/15">🎤</button>
+                            <button onclick="toggleBGM()" id="btn-hud-bgm" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-emerald-300 rounded-md text-xs font-bold border border-white/15">🎵</button>
+                            <button onclick="toggleSFX()" id="btn-hud-sfx" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-sky-200 rounded-md text-xs font-bold border border-white/15">🔊</button>
+                            <button onclick="aesGfxOpen()" id="btn-hud-gfx" title="Grafik" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-amber-300 rounded-md text-xs font-bold border border-white/15">🖥️</button>
+                            <button onclick="toggleFullScreen()" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-sky-200 rounded-md text-xs font-bold border border-white/15">⛶</button>
+                            <button id="btn-back-teacher" onclick="exitTeacher3DMonitor()" class="px-2 py-1 bg-indigo-600 hover:bg-indigo-500 text-white rounded-md text-xs font-bold" title="Kembali ke Dashboard">⚙️</button>
                         </div>
                     </div>
-                    <div class="text-xs text-slate-200">
-                        <div class="flex items-center justify-between mb-1">
-                            <span>Urutan Belajar (Mulai G1):</span>
+                    <div class="text-xs text-slate-200 space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-400">Urutan Belajar:</span>
                             <span id="hud-building-progress" class="font-bold text-emerald-300">0 / 5</span>
                         </div>
-                        <div class="flex items-center justify-between mb-1">
-                            <span>Koin Gedung:</span>
-                            <span class="font-extrabold text-amber-300">
-                                🪙 <span id="hud-coins">0</span>
-                            </span>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-400">Koin:</span>
+                            <span class="font-extrabold text-amber-300">🪙 <span id="hud-coins">0</span></span>
                         </div>
-                        <div id="hud-building-badges" class="flex flex-wrap gap-1 mt-1 max-h-16 overflow-y-auto custom-scroll"></div>
-                        <div id="shop-lock-hint" class="hidden text-[11px] font-bold text-slate-300 mt-1.5 bg-slate-900/70 px-2.5 py-1.5 rounded-lg border border-slate-600/50">🔒 Toko, mobil & bus terbuka setelah semua gedung selesai dipelajari</div>
-                        <div id="shop-hud-row" class="hidden flex flex-wrap gap-1.5 mt-1.5">
-                            <button onclick="openShopModal()" class="flex-1 px-2 py-1.5 bg-amber-400 hover:bg-amber-300 text-slate-950 rounded-lg text-xs font-extrabold shadow">🛍️ Toko</button>
-                            <button id="btn-car-toggle" onclick="toggleCar()" class="hidden flex-1 px-2 py-1.5 bg-sky-400 hover:bg-sky-300 text-slate-950 rounded-lg text-xs font-extrabold shadow">🚗 Naik Mobil</button>
-                            <button id="btn-bus-toggle" onclick="toggleBus()" class="hidden flex-1 px-2 py-1.5 bg-indigo-400 hover:bg-indigo-300 text-slate-950 rounded-lg text-xs font-extrabold shadow">🚌 Naik Bus</button>
+                        <div id="hud-building-badges" class="flex flex-wrap gap-1 mt-1 max-h-12 overflow-y-auto custom-scroll"></div>
+                        <div id="shop-lock-hint" class="hidden text-[10px] font-bold text-slate-300 bg-slate-900/70 px-2 py-1 rounded-lg border border-slate-600/50">🔒 Toko terbuka setelah semua gedung selesai</div>
+                        <div id="shop-hud-row" class="hidden flex flex-wrap gap-1 mt-1">
+                            <button onclick="openShopModal()" class="flex-1 px-2 py-1 bg-amber-400 hover:bg-amber-300 text-slate-950 rounded-md text-xs font-extrabold">🛍️ Toko</button>
+                            <button id="btn-car-toggle" onclick="toggleCar()" class="hidden flex-1 px-2 py-1 bg-sky-400 hover:bg-sky-300 text-slate-950 rounded-md text-xs font-extrabold">🚗 Mobil</button>
+                            <button id="btn-bus-toggle" onclick="toggleBus()" class="hidden flex-1 px-2 py-1 bg-indigo-400 hover:bg-indigo-300 text-slate-950 rounded-md text-xs font-extrabold">🚌 Bus</button>
                         </div>
-                        <div id="hud-next-target-hint" class="text-xs font-bold text-amber-300 mt-1.5 bg-slate-900/80 px-2.5 py-1.5 rounded-lg border border-amber-400/30">🎯 Tujuan Berikutnya: Gedung G1</div>
+                        <div id="hud-next-target-hint" class="text-[11px] font-bold text-amber-300 bg-slate-900/80 px-2 py-1.5 rounded-lg border border-amber-400/30">🎯 Tujuan: Gedung G1</div>
                     </div>
-                    <div id="teacher-follow-indicator" class="hidden text-xs bg-amber-500/25 border border-amber-400 text-amber-200 px-3 py-1.5 rounded-lg flex items-center justify-between">
+                    <div id="teacher-follow-indicator" class="hidden text-xs bg-amber-500/25 border border-amber-400 text-amber-200 px-2 py-1.5 rounded-lg flex items-center justify-between">
                         <span id="teacher-follow-name" class="truncate font-extrabold">Memantau: Siswa</span>
-                        <button onclick="stopFollowingStudent()" class="text-xs font-extrabold text-white ml-2 hover:underline">Lepas ✕</button>
+                        <button onclick="stopFollowingStudent()" class="text-xs font-extrabold text-white ml-2 hover:underline">✕</button>
                     </div>
                 </div>
-                <div id="hud-center-card" class="glass rounded-2xl px-5 py-3 pointer-events-auto text-center shadow-xl border border-sky-300/40">
-                    <div id="hud-phase-label" class="text-xs font-extrabold uppercase tracking-widest text-sky-200">MENUNGGU INSTRUKSI GURU</div>
-                    <div id="hud-timer" class="text-2xl md:text-3xl font-extrabold text-white font-mono">30:00</div>
-                    <div id="hud-location-indicator" class="text-xs text-amber-300 font-bold">📍 Lokasi: Plaza Metropolis</div>
-                    <div id="hud-teacher-quick-bar" class="mt-2 pt-2 border-t border-white/15 flex flex-wrap items-center justify-center gap-1.5">
-                        <button onclick="teacherStartLearningPhase()" class="px-2.5 py-1 bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-extrabold text-xs rounded-md">▶️ Mulai Belajar</button>
-                        <button onclick="teacherAdjustTime(60)" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-emerald-300 font-bold text-xs rounded-md border border-emerald-400/40">+1m</button>
-                        <button onclick="teacherAdjustTime(-60)" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-rose-300 font-bold text-xs rounded-md border border-rose-400/40">-1m</button>
-                        <button onclick="teacherCallToDockPhase()" class="px-2.5 py-1 bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-xs rounded-md">🧭 Ke Dermaga</button>
-                        <button onclick="teacherStartBoatRace()" class="px-2.5 py-1 bg-rose-500 hover:bg-rose-400 text-white font-extrabold text-xs rounded-md">🏁 Mulai Lomba</button>
-                        <button onclick="teacherStartReflectionPhase()" title="Panggil siswa ke pulau untuk mengisi refleksi" class="px-2.5 py-1 bg-purple-500 hover:bg-purple-400 text-white font-extrabold text-xs rounded-md border border-purple-300">📝 Refleksi</button>
+
+                <!-- TIMER TENGAH (hover untuk tampilkan tombol guru) -->
+                <div id="hud-center-card">
+                    <div id="hud-phase-label" class="text-[10px] font-extrabold uppercase tracking-widest text-sky-300">MENUNGGU INSTRUKSI GURU</div>
+                    <div id="hud-timer" class="text-xl font-extrabold text-white font-mono leading-tight">30:00</div>
+                    <div id="hud-location-indicator" class="text-[10px] text-amber-300 font-bold">📍 Plaza Metropolis</div>
+                    <div id="hud-teacher-quick-bar" class="pt-2 border-t border-white/10 flex flex-wrap items-center justify-center gap-1 mt-1">
+                        <button onclick="teacherStartLearningPhase()" class="px-2 py-1 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-[11px] rounded-md">▶️ Mulai</button>
+                        <button onclick="teacherAdjustTime(60)" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-emerald-300 font-bold text-[11px] rounded-md border border-emerald-400/40">+1m</button>
+                        <button onclick="teacherAdjustTime(-60)" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-rose-300 font-bold text-[11px] rounded-md border border-rose-400/40">-1m</button>
+                        <button onclick="teacherCallToDockPhase()" class="px-2 py-1 bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-[11px] rounded-md">🧭 Dermaga</button>
+                        <button onclick="teacherStartBoatRace()" class="px-2 py-1 bg-rose-500 hover:bg-rose-400 text-white font-extrabold text-[11px] rounded-md">🏁 Lomba</button>
+                        <button onclick="teacherStartReflectionPhase()" class="px-2 py-1 bg-purple-500 hover:bg-purple-400 text-white font-extrabold text-[11px] rounded-md">📝 Refleksi</button>
                     </div>
                 </div>
-                <div id="hud-right-card" class="glass rounded-2xl p-3 pointer-events-auto w-80 space-y-2 shadow-xl">
+
+                <!-- MINIMAP KANAN -->
+                <div id="hud-right-card" class="space-y-1.5">
                     <div class="flex items-center justify-between">
-                        <span id="hud-map-title" class="text-xs font-extrabold uppercase tracking-wider text-sky-200">🗺️ Peta & Pantauan Siswa</span>
-                        <span id="hud-online-count" class="text-xs font-extrabold bg-emerald-500/30 text-emerald-200 px-2.5 py-0.5 rounded-full">0 Siswa</span>
+                        <span id="hud-map-title" class="text-[10px] font-extrabold uppercase tracking-wider text-sky-300">🗺️ Peta Kota</span>
+                        <span id="hud-online-count" class="text-[10px] font-extrabold bg-emerald-500/30 text-emerald-200 px-2 py-0.5 rounded-full">0 Siswa</span>
                     </div>
-                    <canvas id="minimap-canvas" width="260" height="145" class="w-full rounded-xl border border-white/20 bg-emerald-950"></canvas>
-                    <div id="hud-map-pick" class="hidden max-h-44 overflow-y-auto custom-scroll rounded-xl bg-slate-900/95 border border-amber-300/60 p-2 text-xs space-y-1.5"></div>
-                    <div id="hud-map-legend" class="flex items-center justify-between text-[10px] font-semibold text-slate-200 px-1">
+                    <canvas id="minimap-canvas" width="260" height="145" class="rounded-lg border border-white/15 bg-emerald-950" style="display:block"></canvas>
+                    <div id="hud-map-pick" class="hidden max-h-32 overflow-y-auto custom-scroll rounded-lg bg-slate-900/95 border border-amber-300/60 p-1.5 text-xs space-y-1"></div>
+                    <div id="hud-map-legend" class="flex items-center justify-between text-[9px] font-semibold text-slate-300 px-0.5">
                         <span>🟡 G1..GN</span>
                         <span>🟢 Selesai</span>
-                        <span>✓ Benar | ✗ Salah</span>
-                        <span>🏝️ Pulau | 🟣 Di dalam</span>
+                        <span>🏝️ Pulau</span>
+                        <span>🟩 Kamu</span>
                     </div>
-                    <div id="hud-online-list" class="max-h-48 overflow-y-auto custom-scroll space-y-1.5 text-xs pt-1.5 border-t border-white/15"></div>
+                    <div id="hud-online-list" class="overflow-y-auto custom-scroll space-y-1 text-xs pt-1 border-t border-white/10"></div>
                 </div>
             </div>
             <div id="waiting-teacher-banner" class="fixed top-36 left-1/2 -translate-x-1/2 pointer-events-auto hidden">
@@ -51786,7 +52146,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
                 name: "",
                 role: "spectator",
                 hasJoinedGame: !1,
-                color: "#0ea5e9",
+                color: "#c0392b",
                 x: 0,
                 z: 50,
                 rotY: Math.PI,
@@ -57038,29 +57398,29 @@ https://github.com/nodeca/pako/blob/main/LICENSE
             function createLushTreeMesh(e=0) {
                 const t = new THREE.Group
                   , n = new THREE.Mesh(new THREE.CylinderGeometry(.48,.72,3.6,8),new THREE.MeshLambertMaterial({
-                    color: 7877903
+                    color: 5590016
                 }));
                 if (n.position.y = 1.8,
                 t.add(n),
                 e % 2 === 0) {
                     const o = new THREE.Mesh(new THREE.SphereGeometry(2.6,12,12),new THREE.MeshLambertMaterial({
-                        color: 1409085
+                        color: 2263842
                     }));
                     o.position.set(0, 4.6, 0),
                     t.add(o);
                     const a = new THREE.Mesh(new THREE.SphereGeometry(1.9,10,10),new THREE.MeshLambertMaterial({
-                        color: 2278750
+                        color: 3184411
                     }));
                     a.position.set(.9, 5.7, .5),
                     t.add(a)
                 } else {
                     const o = new THREE.Mesh(new THREE.ConeGeometry(2.7,4.2,10),new THREE.MeshLambertMaterial({
-                        color: 1467700
+                        color: 2263842
                     }));
                     o.position.y = 4.2,
                     t.add(o);
                     const a = new THREE.Mesh(new THREE.ConeGeometry(2.1,3.6,10),new THREE.MeshLambertMaterial({
-                        color: 2278750
+                        color: 3184411
                     }));
                     a.position.y = 6.2,
                     t.add(a)
@@ -57073,8 +57433,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
                 clock = new THREE.Clock;
                 const e = document.getElementById("canvas-container");
                 scene = new THREE.Scene,
-                scene.background = new THREE.Color(6333946),
-                scene.fog = new THREE.FogExp2(9684477,55e-5),
+                scene.background = new THREE.Color(8900331),
+                scene.fog = new THREE.FogExp2(12112104,55e-5),
                 camera = new THREE.PerspectiveCamera(60,window.innerWidth / window.innerHeight,.5,1800),
                 camera.position.set(0, 8, 55);
                 const t = !1;
@@ -57092,14 +57452,14 @@ https://github.com/nodeca/pako/blob/main/LICENSE
                     THREE.Texture.DEFAULT_ANISOTROPY = Math.min(renderer.capabilities.getMaxAnisotropy(), n ? 2 : 16)
                 } catch {}
                 e.appendChild(renderer.domElement);
-                const o = new THREE.HemisphereLight(16777215,4906624,.88);
+                const o = new THREE.HemisphereLight(16773280,10053222,1.05);
                 o.position.set(0, 160, 0),
                 scene.add(o);
                 const a = new THREE.DirectionalLight(16776171,1.05);
                 a.position.set(100, 180, 80),
                 scene.add(a);
                 const r = new THREE.Mesh(new THREE.PlaneGeometry(1600,620),new THREE.MeshLambertMaterial({
-                    color: 2278750
+                    color: 8294016
                 }));
                 r.rotation.x = -Math.PI / 2,
                 r.position.set(0, -.25, -242),
@@ -57112,6 +57472,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
                 createFluffyCloudsWithSoftShadows(),
                 createSmartClosedLoopTrafficAndDrones(),
                 createWideOceanDockAndDistantVictoryIsland(),
+                spawnKomodoNPCs(),
                 AES_LITE && ISL.group) {
                     const i = [].concat(ISL.swings, ISL.seesaw, ISL.flames, ISL.beam, ISL.foam, ISL.buoys, ISL.koi, ISL.butterflies, ISL.ripples);
                     (ISL.kites || []).forEach(l => {
@@ -57152,13 +57513,13 @@ https://github.com/nodeca/pako/blob/main/LICENSE
             function createDistantMountainRanges() {
                 const e = new THREE.Group
                   , t = new THREE.MeshLambertMaterial({
-                    color: 1409085
+                    color: 5597999
                 })
                   , n = new THREE.MeshLambertMaterial({
-                    color: 1467700
+                    color: 7051811
                 })
                   , o = new THREE.MeshLambertMaterial({
-                    color: 16317180
+                    color: 6579300
                 });
                 for (let a = 0; a < 36; a++) {
                     const r = Math.PI * .85 + a / 35 * Math.PI * 1.3
@@ -57181,19 +57542,19 @@ https://github.com/nodeca/pako/blob/main/LICENSE
             }
             function createBrightCityRoadsTreesAndParks() {
                 const e = new THREE.MeshLambertMaterial({
-                    color: 3359061
+                    color: 7747923
                 })
                   , t = new THREE.MeshLambertMaterial({
-                    color: 3359061,
+                    color: 7747923,
                     polygonOffset: !0,
                     polygonOffsetFactor: -1,
                     polygonOffsetUnits: -1
                 })
                   , n = new THREE.MeshLambertMaterial({
-                    color: 9741240
+                    color: 5921370
                 })
                   , o = new THREE.MeshLambertMaterial({
-                    color: 14870768
+                    color: 15921906
                 });
                 [-168, -84, 0, 84, 168].forEach(l => {
                     const m = l === 0
@@ -57762,6 +58123,93 @@ https://github.com/nodeca/pako/blob/main/LICENSE
                 }
                 )
             }
+            /* ===== KOMODO NPC — ikon NTT berjalan di kota ===== */
+            const komodoNPCList = [];
+            function createKomodoMesh() {
+                const g = new THREE.Group;
+                const matBody = new THREE.MeshLambertMaterial({ color: 0x5C4A1E }); /* coklat komodo */
+                const matBelly = new THREE.MeshLambertMaterial({ color: 0x8B7355 }); /* perut lebih terang */
+                const matDark  = new THREE.MeshLambertMaterial({ color: 0x3A2F1A }); /* ujung gelap */
+                const d = (parent, geo, mat, x, y, z) => {
+                    const m = new THREE.Mesh(geo, mat);
+                    m.position.set(x, y, z);
+                    parent.add(m);
+                    return m;
+                };
+                /* Badan */
+                const body = d(g, new THREE.BoxGeometry(1.8, .6, .7), matBody, 0, .5, 0);
+                /* Perut */
+                d(g, new THREE.BoxGeometry(1.4, .3, .72), matBelly, 0, .35, 0);
+                /* Kepala */
+                const head = new THREE.Group();
+                head.position.set(.95, .62, 0);
+                d(head, new THREE.BoxGeometry(.7, .38, .55), matBody, 0, 0, 0);
+                /* Mata */
+                [-.15,.15].forEach(z => d(head, new THREE.SphereGeometry(.06,6,6), new THREE.MeshBasicMaterial({color:0xFFD700}), .3, .1, z));
+                /* Lubang hidung */
+                d(head, new THREE.BoxGeometry(.08,.06,.56), matDark, .36, 0, 0);
+                g.add(head);
+                /* Ekor panjang */
+                const tail = d(g, new THREE.BoxGeometry(1.6, .3, .45), matBody, -1.1, .38, 0);
+                d(g, new THREE.BoxGeometry(.6, .18, .3), matDark, -2.0, .32, 0);
+                /* 4 kaki pendek */
+                [[-0.5, 0, .4],[0.4, 0, .4],[-0.5, 0, -.4],[0.4, 0, -.4]].forEach(([x,,z]) => {
+                    d(g, new THREE.BoxGeometry(.22, .4, .22), matBody, x, .2, z);
+                    d(g, new THREE.BoxGeometry(.28, .08, .28), matDark, x, .02, z);
+                });
+                g.scale.set(.55, .55, .55);
+                return g;
+            }
+            function spawnKomodoNPCs() {
+                /* Posisi komodo di sekitar kota — dekat gedung */
+                const spots = [
+                    {x: 10, z: 20}, {x: -30, z: -20}, {x: 55, z: 10},
+                    {x: -55, z: -60}, {x: 20, z: -80}, {x: -10, z: 30}
+                ];
+                spots.forEach((pos, i) => {
+                    const k = createKomodoMesh();
+                    k.position.set(pos.x, 0, pos.z);
+                    k.rotation.y = Math.random() * Math.PI * 2;
+                    k.userData = {
+                        startX: pos.x, startZ: pos.z,
+                        speed: .4 + Math.random() * .3,
+                        dir: Math.random() * Math.PI * 2,
+                        timer: Math.random() * 4,
+                        pause: 0
+                    };
+                    scene.add(k);
+                    komodoNPCList.push(k);
+                });
+            }
+            function updateKomodoNPCs(dt) {
+                komodoNPCList.forEach(k => {
+                    const u = k.userData;
+                    u.timer -= dt;
+                    if (u.pause > 0) { u.pause -= dt; return; }
+                    if (u.timer <= 0) {
+                        /* Ganti arah secara acak */
+                        u.dir += (Math.random() - .5) * Math.PI;
+                        u.timer = 2 + Math.random() * 3;
+                        if (Math.random() < .3) { u.pause = .8 + Math.random(); return; }
+                    }
+                    const spd = u.speed * dt;
+                    const nx = k.position.x + Math.sin(u.dir) * spd;
+                    const nz = k.position.z + Math.cos(u.dir) * spd;
+                    /* Batasi jarak dari titik awal */
+                    const dx = nx - u.startX, dz = nz - u.startZ;
+                    if (Math.sqrt(dx*dx+dz*dz) < 20) {
+                        k.position.x = nx;
+                        k.position.z = nz;
+                    } else {
+                        u.dir += Math.PI + (Math.random()-.5)*.5;
+                    }
+                    k.rotation.y = -u.dir + Math.PI/2;
+                    /* Animasi tubuh naik turun saat berjalan */
+                    k.position.y = Math.abs(Math.sin(performance.now()/300 + k.userData.startX)) * .04;
+                });
+            }
+            /* ===== /KOMODO NPC ===== */
+
             function createWideOceanDockAndDistantVictoryIsland() {
                 const e = new THREE.Mesh(new THREE.PlaneGeometry(1600,360),new THREE.MeshLambertMaterial({
                     color: 165063
@@ -59452,85 +59900,129 @@ https://github.com/nodeca/pako/blob/main/LICENSE
             }
             function createRobotCharacterMesh(e, t) {
                 const n = new THREE.Group
-                  , o = t || "#0ea5e9"
+                  /* Warna NTT — tenun timor: coklat kulit, merah NTT, hitam, krem */
+                  , o = t || "#c0392b"   /* warna pilihan siswa (default merah NTT) */
                   , a = (c, h) => new THREE.MeshPhongMaterial({
                     color: c,
                     shininess: Math.min(h || 60, 30),
                     specular: 2039583
                 })
-                  , r = a(15857145, 70)
+                  /* r = kulit coklat NTT */
+                  , r = a(0x8B5E3C, 40)
+                  /* s = warna pilihan siswa (aksen tenun) */
                   , s = a(o, 70)
-                  , i = a(1976635, 40)
-                  , l = a(6583435, 50)
+                  /* i = hitam tenun */
+                  , i = a(0x1a0a00, 40)
+                  /* l = krem/kain tenun */
+                  , l = a(0xD4A860, 50)
+                  /* m = mata (putih) */
                   , m = new THREE.MeshBasicMaterial({
-                    color: 3718648
+                    color: 0xFFFFFF
                 })
+                  /* mata hitam */
+                  , matEyeDark = new THREE.MeshBasicMaterial({ color: 0x111111 })
+                  /* warna baju tenun NTT (garis-garis merah-hitam) */
+                  , matBaju = a(0xC0392B, 50)
+                  /* warna celana/bawah (hitam tenun) */
+                  , matCelana = a(0x2C1810, 40)
+                  /* ikat kepala/topi (kuning NTT) */
+                  , matIkat = a(0xF39C12, 60)
                   , d = (c, h, x, T, k, G) => {
-                    const v = new THREE.Mesh(h,x);
+                    const v = new THREE.Mesh(h, x);
                     return v.position.set(T, k, G),
                     c.add(v),
                     v
                 }
-                  , w = (c, h, x, T) => new THREE.CylinderGeometry(c,h,x,T || 14)
-                  , p = c => new THREE.SphereGeometry(c,14,10);
-                d(n, new THREE.BoxGeometry(1.25,.95,1.1), r, 0, 3.5, 0),
-                d(n, new THREE.BoxGeometry(1.05,.6,.1), i, 0, 3.5, .55),
-                [-.27, .27].forEach(c => d(n, new THREE.BoxGeometry(.3,.16,.05), m, c, 3.55, .6)),
-                d(n, new THREE.BoxGeometry(.3,.12,.8), s, 0, 4, -.05),
-                [-1, 1].forEach(c => {
-                    const h = d(n, w(.24, .24, .2, 16), s, c * .7, 3.5, 0);
-                    h.rotation.z = Math.PI / 2
-                }
-                ),
-                d(n, w(.03, .03, .45, 6), l, .38, 4.25, -.2),
-                d(n, p(.08), m, .38, 4.5, -.2),
-                d(n, w(.22, .26, .25, 12), i, 0, 2.92, 0),
-                d(n, new THREE.BoxGeometry(1.5,1,.9), s, 0, 2.3, 0),
-                d(n, new THREE.BoxGeometry(1.1,.7,.06), r, 0, 2.35, .46);
-                const u = d(n, w(.17, .17, .06, 16), m, 0, 2.35, .5);
+                  , w = (c, h, x, T) => new THREE.CylinderGeometry(c, h, x, T || 14)
+                  , p = c => new THREE.SphereGeometry(c, 14, 10);
+
+                /* ===== KEPALA ===== */
+                /* Kepala bulat — kulit coklat NTT */
+                d(n, new THREE.BoxGeometry(1.25, .95, 1.1), r, 0, 3.5, 0),
+                /* Muka depan */
+                d(n, new THREE.BoxGeometry(1.05, .6, .1), i, 0, 3.5, .55),
+                /* Mata kiri-kanan */
+                [-.27, .27].forEach(c => d(n, new THREE.BoxGeometry(.3, .16, .05), m, c, 3.55, .6)),
+                /* Pupil mata */
+                [-.27, .27].forEach(c => d(n, new THREE.BoxGeometry(.15, .1, .06), matEyeDark, c, 3.54, .61)),
+                /* Ikat kepala khas NTT — pita kuning melingkar */
+                d(n, new THREE.BoxGeometry(1.3, .18, 1.15), matIkat, 0, 4.0, 0),
+                d(n, new THREE.BoxGeometry(.12, .2, .08), matIkat, 0, 4.25, -.2),
+                d(n, p(.08), matIkat, 0, 4.5, -.2),
+
+                /* ===== LEHER ===== */
+                d(n, w(.22, .26, .25, 12), matCelana, 0, 2.92, 0),
+
+                /* ===== BADAN — kain tenun NTT ===== */
+                /* Baju utama warna merah NTT */
+                d(n, new THREE.BoxGeometry(1.5, 1, .9), matBaju, 0, 2.3, 0),
+                /* Garis tenun horizontal hitam di baju */
+                d(n, new THREE.BoxGeometry(1.52, .08, .92), i, 0, 2.55, 0),
+                d(n, new THREE.BoxGeometry(1.52, .08, .92), i, 0, 2.15, 0),
+                /* Motif tenun vertikal (garis emas di tengah) */
+                d(n, new THREE.BoxGeometry(.12, 1.02, .92), matIkat, 0, 2.3, 0),
+                /* Panel dada (ornamen bundar NTT) */
+                d(n, new THREE.BoxGeometry(1.1, .7, .06), l, 0, 2.35, .46);
+                const u = d(n, w(.17, .17, .06, 16), matIkat, 0, 2.35, .5);
                 u.rotation.x = Math.PI / 2,
-                d(n, new THREE.TorusGeometry(.22,.03,8,20), i, 0, 2.35, .5),
-                d(n, new THREE.BoxGeometry(1,.5,.7), i, 0, 1.5, 0),
-                d(n, new THREE.BoxGeometry(1.25,.2,.78), l, 0, 1.25, 0),
-                d(n, new THREE.BoxGeometry(.95,.95,.35), i, 0, 2.25, -.62),
+                d(n, new THREE.TorusGeometry(.22, .03, 8, 20), i, 0, 2.35, .5),
+
+                /* ===== BAGIAN BAWAH — sarung/celana tenun ===== */
+                d(n, new THREE.BoxGeometry(1, .5, .7), matCelana, 0, 1.5, 0),
+                /* Garis sarung kuning */
+                d(n, new THREE.BoxGeometry(1.02, .1, .72), matIkat, 0, 1.68, 0),
+                d(n, new THREE.BoxGeometry(1.02, .1, .72), matIkat, 0, 1.32, 0),
+                d(n, new THREE.BoxGeometry(1.25, .2, .78), matBaju, 0, 1.25, 0),
+                d(n, new THREE.BoxGeometry(.95, .95, .35), matCelana, 0, 2.25, -.62),
+                /* Sepatu/kaki */
                 [-.28, .28].forEach(c => {
-                    d(n, w(.12, .14, .35, 10), l, c, 1.65, -.62),
-                    d(n, w(.09, .09, .04, 10), m, c, 1.45, -.62)
-                }
-                );
+                    d(n, w(.12, .14, .35, 10), matCelana, c, 1.65, -.62),
+                    d(n, w(.09, .09, .04, 10), i, c, 1.45, -.62)
+                });
+
+                /* ===== LENGAN ===== */
                 const H = c => {
                     const h = new THREE.Group;
                     return h.position.set(c * 1.02, 2, 0),
+                    /* Bahu */
                     d(h, p(.38), r, 0, .62, 0).scale.set(1, .8, 1),
-                    d(h, w(.17, .17, .5, 12), r, 0, .3, 0),
-                    d(h, p(.19), i, 0, 0, 0),
-                    d(h, w(.2, .17, .5, 12), s, 0, -.3, 0),
-                    d(h, p(.21), i, 0, -.65, 0),
+                    /* Lengan atas */
+                    d(h, w(.17, .17, .5, 12), matBaju, 0, .3, 0),
+                    /* Siku */
+                    d(h, p(.19), r, 0, 0, 0),
+                    /* Lengan bawah */
+                    d(h, w(.2, .17, .5, 12), l, 0, -.3, 0),
+                    /* Tangan */
+                    d(h, p(.21), r, 0, -.65, 0),
                     n.add(h),
                     h
                 }
                   , M = H(-1)
                   , E = H(1)
+
+                /* ===== KAKI ===== */
                   , g = c => {
                     const h = new THREE.Group;
                     return h.position.set(c * .4, .6, 0),
-                    d(h, p(.25), i, 0, .6, 0),
-                    d(h, w(.23, .2, .5, 12), r, 0, .32, 0),
+                    /* Paha */
+                    d(h, p(.25), matCelana, 0, .6, 0),
+                    d(h, w(.23, .2, .5, 12), matCelana, 0, .32, 0),
+                    /* Lutut */
                     d(h, p(.2), i, 0, .02, 0),
-                    d(h, w(.2, .17, .45, 12), l, 0, -.24, 0),
-                    d(h, new THREE.BoxGeometry(.5,.22,.74), r, 0, -.49, .1),
-                    d(h, new THREE.BoxGeometry(.5,.1,.2), s, 0, -.52, .42),
+                    /* Betis */
+                    d(h, w(.2, .17, .45, 12), matCelana, 0, -.24, 0),
+                    /* Sepatu */
+                    d(h, new THREE.BoxGeometry(.5, .22, .74), i, 0, -.49, .1),
+                    d(h, new THREE.BoxGeometry(.5, .1, .2), matBaju, 0, -.52, .42),
                     n.add(h),
                     h
                 }
                   , f = g(-1)
                   , R = g(1);
-                AES_LITE && (aesBakeDirect(n),
-                aesBakeDirect(M),
-                aesBakeDirect(E),
-                aesBakeDirect(f),
-                aesBakeDirect(R));
-                const y = createTextLabelSprite(`🤖 ${e}`, t || "#0ea5e9", .6);
+
+                AES_LITE && (aesBakeDirect(n), aesBakeDirect(M), aesBakeDirect(E), aesBakeDirect(f), aesBakeDirect(R));
+
+                const y = createTextLabelSprite(`🦎 ${e}`, t || "#c0392b", .6);
                 return y.position.set(0, 5.7, 0),
                 n.add(y),
                 n.userData = {
@@ -60294,6 +60786,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
                 }
                 ),
                 updateIslandLife(t, e),
+                updateKomodoNPCs(e),
                 myAvatarMesh && myPlayer.hasJoinedGame) {
                     myPlayer.inCar && !canUseCarNow() && setCarState(!1),
                     updateMyBusRide(),
@@ -60604,7 +61097,10 @@ https://github.com/nodeca/pako/blob/main/LICENSE
             }
               , LOCAL_LOGIN = {
                 SHARED_HASH: "",
-                USERS: { "setiawan.hari985@gmail.com": "98b06210555c9557804a8db256c6909afe54c0f30e939c30bcee829ccd277e38" }
+                USERS: {
+                    "setiawan.hari985@gmail.com": "98b06210555c9557804a8db256c6909afe54c0f30e939c30bcee829ccd277e38",
+                    "smkn1kuwus": "4755da55060fa7661627066b909d92fae421f7e66dd0c0369f1d8e1e2c3271aa"
+                }
             };
             let _gateProceed = null
               , gateMode = "login"
@@ -60728,8 +61224,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
                 const e = $g("gate-email").value.trim().toLowerCase()
                   , t = $g("gate-pass").value
                   , n = $g("gate-btn");
-                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)) {
-                    gateMsg("Isi email yang valid.", !1);
+                if (!e || e.length < 3) {
+                    gateMsg("Isi username atau email yang valid.", !1);
                     return
                 }
                 if (!t) {
@@ -77334,41 +77830,64 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         </script>
         <style id="aes-launch-bottom">
             /* Tombol lomba dipindah ke tengah bawah */
-            #rn-launch,#cr-launch,#pl-launch {
-                right: auto!important;
-                top: auto!important;
-                bottom: calc(.6rem + env(safe-area-inset-bottom,0px))!important;
-                white-space: nowrap
+            /* ===== TOMBOL BAWAH — container flex, semua sejajar ===== */
+            /* Sembunyikan posisi individual lama dari ketiga tombol lomba */
+            #rn-launch, #cr-launch, #pl-launch {
+                position: static !important;
+                right: auto !important;
+                top: auto !important;
+                bottom: auto !important;
+                left: auto !important;
+                transform: none !important;
+                white-space: nowrap;
+                flex-shrink: 0;
             }
-
-            #cr-launch {
-                left: 50%!important;
-                transform: translateX(-50%)!important
+            #btn-simulasi-fixed, #btn-simpan-link-fixed {
+                position: static !important;
+                bottom: auto !important;
+                left: auto !important;
+                border: none;
+                border-radius: 999px;
+                font-weight: 800;
+                font-size: .82rem;
+                cursor: pointer;
+                padding: 10px 18px;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                white-space: nowrap;
+                box-shadow: 0 4px 16px rgba(0,0,0,.35);
+                transition: opacity .15s, transform .1s;
+                flex-shrink: 0;
             }
-
-            #rn-launch {
-                left: calc(50% - 78px)!important;
-                transform: translateX(-100%)!important
+            #btn-simulasi-fixed {
+                background: #1e293b;
+                color: #fbbf24;
+                border: 1.5px solid rgba(251,191,36,.35);
             }
-
-            #pl-launch {
-                left: calc(50% + 78px)!important;
-                transform: none!important
+            #btn-simpan-link-fixed {
+                background: linear-gradient(90deg,#0284c7,#0ea5e9);
+                color: #fff;
             }
-
-            @media (orientation: portrait) {
-                #rn-launch,#cr-launch,#pl-launch {
-                    font-size:11px!important;
-                    padding: 7px 8px!important
-                }
-
-                #rn-launch {
-                    left: calc(50% - 62px)!important
-                }
-
-                #pl-launch {
-                    left: calc(50% + 62px)!important
-                }
+            #btn-simulasi-fixed:hover, #btn-simpan-link-fixed:hover {
+                opacity: .88; transform: translateY(-1px);
+            }
+            /* Container flex yang membungkus semua 5 tombol */
+            #bottom-action-bar {
+                position: fixed;
+                bottom: calc(.6rem + env(safe-area-inset-bottom,0px));
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 300;
+                display: none; /* diaktifkan via JS */
+                flex-direction: row;
+                align-items: center;
+                gap: 8px;
+                flex-wrap: nowrap;
+            }
+            @media (max-width: 700px) {
+                #bottom-action-bar { flex-wrap: wrap; justify-content: center; gap: 6px; }
+                #bottom-action-bar button { font-size: .72rem !important; padding: 8px 12px !important; }
             }
         </style>
         <script id="aes-recovery-patch">
@@ -78210,6 +78729,302 @@ https://github.com/nodeca/pako/blob/main/LICENSE
                 cleanOld();
             }
             )();
+        </script>
+
+        <!-- Toggle panel kiri saat masuk/keluar dunia 3D -->
+        <script>
+        (function(){
+            var PANEL_W = 300;
+
+            /* ---- Aktifkan mode split saat game-hud muncul ---- */
+            function syncMode() {
+                var hud = document.getElementById('game-hud');
+                if (!hud) return;
+                var on = !hud.classList.contains('hidden');
+                document.body.classList.toggle('mode-3d', on);
+                /* Trigger resize Three.js agar canvas render di lebar yang benar */
+                if (on) setTimeout(function(){ window.dispatchEvent(new Event('resize')); }, 50);
+            }
+            var hud = document.getElementById('game-hud');
+            if (hud) {
+                new MutationObserver(syncMode).observe(hud, { attributes: true });
+                syncMode();
+            }
+
+            /* ---- Override window.innerWidth saat mode 3D aktif ---- */
+            /* Three.js memanggil window.innerWidth untuk setSize —
+               kita perlu renderer memakai lebar canvas yang sebenarnya */
+            window.addEventListener('resize', function() {
+                try {
+                    if (!document.body.classList.contains('mode-3d')) return;
+                    if (typeof renderer !== 'undefined' && renderer && renderer.setSize) {
+                        var w = window.innerWidth - PANEL_W;
+                        var h = window.innerHeight;
+                        renderer.setSize(w, h);
+                        if (typeof camera !== 'undefined' && camera) {
+                            camera.aspect = w / h;
+                            camera.updateProjectionMatrix();
+                        }
+                    }
+                } catch(e){}
+            }, true); /* capture phase agar jalan sebelum handler lain */
+
+            /* ---- Sinkronisasi data HUD lama → panel kiri baru ---- */
+            function syncPanelData() {
+                /* Fase & Timer */
+                var pl = document.getElementById('hud-phase-label');
+                var spl = document.getElementById('sp-phase-label');
+                if (pl && spl) spl.textContent = pl.textContent;
+
+                var tm = document.getElementById('hud-timer');
+                var stm = document.getElementById('sp-timer');
+                if (tm && stm) stm.textContent = tm.textContent;
+
+                var loc = document.getElementById('hud-location-indicator');
+                var sloc = document.getElementById('sp-location');
+                if (loc && sloc) sloc.textContent = loc.textContent;
+
+                /* Nama pemain */
+                var pn = document.getElementById('hud-player-name');
+                var spn = document.getElementById('sp-player-name');
+                if (pn && spn) spn.textContent = pn.textContent || '—';
+
+                /* Progress gedung */
+                var pr = document.getElementById('hud-building-progress');
+                var spr = document.getElementById('sp-progress');
+                if (pr && spr) spr.textContent = pr.textContent;
+
+                /* Koin */
+                var co = document.getElementById('hud-coins');
+                var sco = document.getElementById('sp-coins');
+                if (co && sco) sco.textContent = co.textContent;
+
+                /* Badge gedung */
+                var bd = document.getElementById('hud-building-badges');
+                var sbd = document.getElementById('sp-building-badges');
+                if (bd && sbd) sbd.innerHTML = bd.innerHTML;
+
+                /* Next hint */
+                var nh = document.getElementById('hud-next-target-hint');
+                var snh = document.getElementById('sp-next-hint');
+                if (nh && snh) snh.textContent = nh.textContent;
+
+                /* Online list */
+                var ol = document.getElementById('hud-online-list');
+                var sol = document.getElementById('sp-online-list');
+                if (ol && sol) sol.innerHTML = ol.innerHTML;
+
+                /* Online count */
+                var oc = document.getElementById('hud-online-count');
+                var soc = document.getElementById('sp-online-count');
+                if (oc && soc) {
+                    var v = soc.querySelector('.sp-stat-val');
+                    if (v) v.textContent = oc.textContent;
+                }
+
+                /* Role label */
+                var rb = document.getElementById('hud-role-badge');
+                var srl = document.getElementById('sp-role-label');
+                if (rb && srl) srl.textContent = rb.textContent;
+
+                /* Toko — tampilkan section jika shop-hud-row tidak hidden */
+                var shr = document.getElementById('shop-hud-row');
+                var sss = document.getElementById('sp-shop-section');
+                if (shr && sss) sss.style.display = shr.classList.contains('hidden') ? 'none' : '';
+
+                var bc = document.getElementById('btn-car-toggle');
+                var sbc = document.getElementById('sp-btn-car');
+                if (bc && sbc) sbc.style.display = bc.classList.contains('hidden') ? 'none' : '';
+
+                var bb = document.getElementById('btn-bus-toggle');
+                var sbb = document.getElementById('sp-btn-bus');
+                if (bb && sbb) sbb.style.display = bb.classList.contains('hidden') ? 'none' : '';
+            }
+
+            /* Jalankan sinkronisasi setiap 1 detik saat mode 3D */
+            setInterval(function() {
+                if (document.body.classList.contains('mode-3d')) syncPanelData();
+            }, 1000);
+
+            /* Sembunyikan kontrol guru saat mode siswa */
+            function checkTeacherControls() {
+                var tc = document.querySelectorAll('#sp-teacher-controls');
+                var isTeacher = typeof isTeacherMode !== 'undefined' ? isTeacherMode : true;
+                tc.forEach(function(el) { el.style.display = isTeacher ? '' : 'none'; });
+            }
+            setInterval(checkTeacherControls, 2000);
+
+        })();
+        </script>
+
+        <!-- ===== BOTTOM ACTION BAR — semua 5 tombol sejajar dalam 1 flex container ===== -->
+        <div id="bottom-action-bar">
+            <button id="btn-simulasi-fixed" onclick="switchToStudentModeDirectly()">🤖 Simulasi Sebagai Siswa</button>
+            <button id="btn-simpan-link-fixed" onclick="generateSessionAndLink()">🚀 Simpan & Buat Link Kelas</button>
+            <!-- ketiga tombol lomba dipindah ke sini via JS -->
+        </div>
+
+        <script>
+        (function(){
+            /* Pindahkan 3 tombol lomba ke dalam container flex */
+            window.addEventListener('load', function() {
+                var bar = document.getElementById('bottom-action-bar');
+                if (!bar) return;
+                ['rn-launch','cr-launch','pl-launch'].forEach(function(id) {
+                    var btn = document.getElementById(id);
+                    if (btn) bar.appendChild(btn);
+                });
+            });
+
+            /* Show/hide seluruh bar berdasarkan halaman aktif */
+            function syncBottomBar() {
+                var ts  = document.getElementById('teacher-screen');
+                var hud = document.getElementById('game-hud');
+                var bar = document.getElementById('bottom-action-bar');
+                var s1  = document.getElementById('btn-simulasi-fixed');
+                var s2  = document.getElementById('btn-simpan-link-fixed');
+                if (!bar) return;
+
+                /* Bar muncul di dashboard (teacher-screen) ATAU dunia 3D (game-hud) */
+                var onDash = ts  && !ts.classList.contains('hidden');
+                var on3D   = hud && !hud.classList.contains('hidden');
+                var showBar = onDash || on3D;
+
+                bar.style.display = showBar ? 'flex' : 'none';
+
+                /* Tombol Simulasi & Simpan Link hanya tampil di dashboard */
+                if (s1) s1.style.display = onDash ? 'flex' : 'none';
+                if (s2) s2.style.display = onDash ? 'flex' : 'none';
+            }
+
+            /* Pantau perubahan class pada kedua layer */
+            ['teacher-screen','game-hud'].forEach(function(id) {
+                var el = document.getElementById(id);
+                if (el) new MutationObserver(syncBottomBar).observe(el, { attributes: true });
+            });
+
+            /* Jalankan sekali saat load */
+            window.addEventListener('load', function() {
+                setTimeout(syncBottomBar, 300);
+            });
+        })();
+        </script>
+
+        <!-- ===== SMKN 1 KUWUS: Persistent Layer Navigation ===== -->
+        <script>
+        (function() {
+            var STORE_KEY = "smkn1kuwus_layer";
+
+            /* Simpan layer aktif ke sessionStorage */
+            function saveLayer(name) {
+                try { sessionStorage.setItem(STORE_KEY, name); } catch(e) {}
+            }
+
+            /* Ambil layer terakhir */
+            function getSavedLayer() {
+                try { return sessionStorage.getItem(STORE_KEY); } catch(e) { return null; }
+            }
+
+            /* Helper: cek apakah elemen visible */
+            function isVisible(id) {
+                var el = document.getElementById(id);
+                return el && !el.classList.contains("hidden");
+            }
+
+            /* Deteksi layer aktif saat ini dan simpan */
+            function detectAndSave() {
+                if (isVisible("game-hud")) saveLayer("game");
+                else if (isVisible("teacher-screen")) saveLayer("dashboard");
+                else if (isVisible("student-login-screen")) saveLayer("student-login");
+            }
+
+            /* Pantau perubahan class pada layer-layer utama dengan MutationObserver */
+            var targets = ["game-hud", "teacher-screen", "student-login-screen"];
+            targets.forEach(function(id) {
+                var el = document.getElementById(id);
+                if (!el) return;
+                new MutationObserver(function(muts) {
+                    muts.forEach(function(m) {
+                        if (m.attributeName === "class") detectAndSave();
+                    });
+                }).observe(el, { attributes: true });
+            });
+
+            /* Restore layer saat refresh — tunggu app selesai init (~800ms) */
+            var savedLayer = getSavedLayer();
+            if (savedLayer && savedLayer !== "dashboard") {
+                /* Hanya restore game-hud (dunia 3D) — dashboard sudah jadi default */
+                window.addEventListener("load", function() {
+                    setTimeout(function() {
+                        try {
+                            if (savedLayer === "game" && typeof enterTeacher3DMonitor === "function") {
+                                /* Cek apakah sekarang memang di dashboard (artinya app sudah init) */
+                                if (isVisible("teacher-screen")) {
+                                    enterTeacher3DMonitor();
+                                }
+                            }
+                        } catch(e) {}
+                    }, 900);
+                });
+            }
+
+            /* Tambahkan tombol kembali ke dashboard di HUD dunia 3D */
+            window.addEventListener("load", function() {
+                setTimeout(function() {
+                    try {
+                        /* Cek apakah tombol sudah ada (dari exitTeacher3DMonitor asli) */
+                        var hud = document.getElementById("game-hud");
+                        if (!hud) return;
+
+                        /* Tambahkan tombol back di pojok kiri atas HUD jika belum ada */
+                        if (!document.getElementById("btn-back-to-dashboard")) {
+                            var btn = document.createElement("button");
+                            btn.id = "btn-back-to-dashboard";
+                            btn.innerHTML = "← Dashboard";
+                            btn.onclick = function() {
+                                saveLayer("dashboard");
+                                if (typeof exitTeacher3DMonitor === "function") exitTeacher3DMonitor();
+                                else {
+                                    document.getElementById("game-hud").classList.add("hidden");
+                                    document.getElementById("teacher-screen").classList.remove("hidden");
+                                }
+                            };
+                            btn.style.cssText = [
+                                "position:fixed",
+                                "top:12px",
+                                "left:12px",
+                                "z-index:9999",
+                                "background:rgba(15,23,42,0.85)",
+                                "color:#93c5fd",
+                                "border:1px solid rgba(99,179,237,0.3)",
+                                "border-radius:10px",
+                                "padding:7px 14px",
+                                "font-size:0.78rem",
+                                "font-weight:700",
+                                "cursor:pointer",
+                                "backdrop-filter:blur(8px)",
+                                "-webkit-backdrop-filter:blur(8px)",
+                                "transition:background 0.15s",
+                                "pointer-events:auto"
+                            ].join(";");
+                            btn.onmouseover = function() { this.style.background = "rgba(15,23,42,0.97)"; };
+                            btn.onmouseout  = function() { this.style.background = "rgba(15,23,42,0.85)"; };
+
+                            /* Sisipkan ke dalam game-hud */
+                            hud.appendChild(btn);
+
+                            /* Sembunyikan tombol ketika game-hud hidden, tampilkan saat visible */
+                            new MutationObserver(function() {
+                                btn.style.display = hud.classList.contains("hidden") ? "none" : "";
+                            }).observe(hud, { attributes: true });
+
+                            /* Kondisi awal */
+                            btn.style.display = hud.classList.contains("hidden") ? "none" : "";
+                        }
+                    } catch(e) {}
+                }, 1200);
+            });
+        })();
         </script>
     </body>
 </html>
